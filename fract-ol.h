@@ -16,10 +16,27 @@
 #include <unistd.h>
 #include "minilibx_opengl_20191021/mlx.h"
 
+# define YMAX 1200
+# define XMAX 1800
+# define IM_SIZE 4
+# define RE_SIZE 6
+
+typedef int t_bool;
+
 typedef struct s_complex
 {
 	double	real;
 	double	imag;
 }	t_complex;
+
+enum e_bool
+{
+	FALSE,
+	TRUE
+};
+
+#include <stdio.h>
+#include <limits.h>
+#include <float.h>
 
 #endif //FRACT_OL_H
