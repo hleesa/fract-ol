@@ -16,8 +16,11 @@
 #include <unistd.h>
 #include "minilibx_opengl_20191021/mlx.h"
 
-# define YMAX 1200
-# define XMAX 1800
+//# define YMAX 1200
+//# define XMAX 1800
+# define YMAX 600
+# define XMAX 900
+#
 # define IM_SIZE 4
 # define RE_SIZE 6
 

@@ -82,7 +82,6 @@ double	complex_size(t_complex comp)
 	return (comp.real * comp.real + comp.imag * comp.imag);
 }
 
-
 t_complex	cartesian_to_complex(int x, int y)
 {
 	const double imag = (double)y* (double)IM_SIZE / (double)YMAX - (double)IM_SIZE / 2.0;
@@ -105,7 +104,7 @@ int	main()
 */
 
 	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 1800, 1200, "mlx 42");
+	win_ptr = mlx_new_window(mlx_ptr, XMAX, YMAX, "fract-ol");
 	for(int y=0; y<YMAX;++y)
 	{
 		for(int x=0; x<XMAX; ++x)
