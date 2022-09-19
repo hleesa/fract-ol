@@ -32,6 +32,13 @@ typedef struct s_complex
 	double	imag;
 }	t_complex;
 
+typedef struct s_mouse_data
+{
+	int button;
+	int x;
+	int y;
+}	t_mouse_data;
+
 enum e_bool
 {
 	FALSE,
@@ -41,5 +48,14 @@ enum e_bool
 #include <stdio.h>
 #include <limits.h>
 #include <float.h>
+
+
+
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+	double	mul;
+}				t_vars;
+
 
 #endif //FRACT_OL_H

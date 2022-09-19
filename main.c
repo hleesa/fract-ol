@@ -12,56 +12,6 @@
 
 #include "fract-ol.h"
 
-void ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-
-int deal_key(int key, void *mlx_ptr, void *win_ptr)
-{
-	/*
-	t_complex com;
-
-	com.real = 0.0;
-	com.imag = 0.0;
-
-	for(double y0=-3.0; y0<3.0; y0 += 0.01)
-	{
-		for(double x0=-3.0; x0<3.0; x0 += 0.01)
-		{
-			int i = 0;
-			double y = 0;
-			double x = 0;
-			while(y * y + x *x <= 2*2 && ++i <1000 )
-			{
-				double xtemp = x * x - y * y + x0;
-				y = 2 * x * y + y0;
-				x = xtemp;
-			}
-			mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x000fff);
-		}
-	}
-	 */
-//	for(int y=0; y<500;++y)
-//	{
-//		for(int x=0; x<500; ++x)
-//		{
-//			mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x000fff);
-//		}
-//	}
-//	mlx_pixel_put(mlx_ptr, win_ptr, 0,0 , 0x000fff);
-
-
-	return 0;
-}
-
-//
-//int deal_key(int key, void *param)
-//{
-//	ft_putchar('x');
-//	return 0;
-//}
 
 t_complex	complex_mul(t_complex lhs, t_complex rhs)
 {
@@ -89,27 +39,47 @@ t_complex	cartesian_to_complex(int x, int y)
 	return ((t_complex){real, imag});
 }
 
-int	main()
-{
-	void *mlx_ptr;
-	void *win_ptr;
+//int	mouse_hook(int button, int x, int y, t_mouse_data *mouse_data)
+//{
+//	*mouse_data = (t_mouse_data){button,x,y};
+//	printf("button:%d, x:%d, y:%d\n", mouse_data->button, mouse_data->x,
+//		   mouse_data->y);
+//
+//	for(int dy=0; dy<YMAX;++dy)
+//	{
+//		for(int dx=0; dx<XMAX; ++dx)
+//		{
+//			t_complex c = cartesian_to_complex(dx, dy);
+//			t_complex z = (t_complex) {0.0, 0.0};
+//			int i = -1;
+//			while (complex_size(z) <= 4 && i < 1000)
+//			{
+//				double xtemp = z.real*z.real -z.imag*z.imag + c.real;
+//				z.imag = 2 * z.real * z.imag + c.imag;
+//				z.real = xtemp;
+//				++i;
+//			}
+//			if (i == 1000)
+//				mlx_pixel_put(mlx_ptr, win_ptr, dx, dy, 0xffffff);
+//		}
+//	}
+//
+//	return (0);
+//}
+
 /*
-	t_complex test = {1, 2};
-	t_complex test2= {2, 3};
-
-	t_complex mul = complex_mul(test, test2);
-	printf("mul:%f %f\n", mul.real, mul.imag);
-	t_complex sum = complex_sum(test, test2, -1);
-	printf("mul:%f %f\n", sum.real, sum.imag);
-*/
-
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, XMAX, YMAX, "fract-ol");
-	for(int y=0; y<YMAX;++y)
+int	mouse_hook(int button, int x, int y, t_vars *vars)
+{
+	printf("button:%d, x:%d, y:%d\n",button,x,y);
+	mlx_clear_window(vars->mlx, vars->win);
+	for(int dy=0; dy<YMAX;++dy)
 	{
-		for(int x=0; x<XMAX; ++x)
+		for(int dx=0; dx<XMAX; ++dx)
 		{
-			t_complex c = cartesian_to_complex(x, y);
+			t_complex c = cartesian_to_complex(dx -x +XMAX/2, dy-y+YMAX/2);
+			c.imag *= vars->mul;
+			c.real *= vars->mul;
+
 			t_complex z = (t_complex) {0.0, 0.0};
 			int i = -1;
 			while (complex_size(z) <= 4 && i < 1000)
@@ -120,15 +90,78 @@ int	main()
 				++i;
 			}
 			if (i == 1000)
-				mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xffffff);
+				mlx_pixel_put(vars->mlx, vars->win, dx, dy, 0xffffff);
 		}
 	}
-	mlx_key_hook(win_ptr, deal_key,(void *)0);
-//	mlx_key_hook(win_ptr, deal_key( 0, mlx_ptr, win_ptr), (void *)0);
+	vars->mul *= vars->mul;
+	return (0);
+}
 
-	 mlx_loop(mlx_ptr);
+int	main()
+{
+	void *mlx_ptr;
+	void *win_ptr;
 
+	mlx_ptr = mlx_init();
+	win_ptr = mlx_new_window(mlx_ptr, XMAX, YMAX, "fract-ol");
+	for(int dy=0; dy<YMAX;++dy)
+	{
+		for(int dx=0; dx<XMAX; ++dx)
+		{
+			t_complex c = cartesian_to_complex(dx, dy);
+			t_complex z = (t_complex) {0.0, 0.0};
+			int i = -1;
+			while (complex_size(z) <= 4 && i < 1000)
+			{
+				double xtemp = z.real*z.real -z.imag*z.imag + c.real;
+				z.imag = 2 * z.real * z.imag + c.imag;
+				z.real = xtemp;
+				++i;
+			}
+			if (i == 1000)
+				mlx_pixel_put(mlx_ptr, win_ptr, dx, dy, 0xffffff);
+		}
+	}
+
+	t_vars vars = (t_vars) {mlx_ptr, win_ptr, 0.95};
+	t_mouse_data mouse_data;
+	mlx_mouse_hook(win_ptr, mouse_hook, &vars);
+	mlx_loop(mlx_ptr);
 
 	return (0);
 
+}
+*/
+
+typedef struct	s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+
+int	main(void)
+{
+	void	*mlx;
+	void	*mlx_win;
+	t_data	img;
+
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	img.img = mlx_new_image(mlx, 1920, 1080);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								 &img.endian);
+	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_loop(mlx);
 }
