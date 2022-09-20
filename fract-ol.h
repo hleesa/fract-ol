@@ -16,13 +16,14 @@
 #include <unistd.h>
 #include "minilibx_opengl_20191021/mlx.h"
 
-//# define YMAX 1200
-//# define XMAX 1800
-# define YMAX 600
-# define XMAX 900
-#
+//# define Y_MAX 1200
+//# define X_MAX 1800
+# define Y_MAX 600
+# define X_MAX 900
+# define ITER_MAX 1024
 # define IM_SIZE 4
 # define RE_SIZE 6
+# define ESCAPE_RADIUS 4
 
 typedef int t_bool;
 
@@ -50,12 +51,24 @@ enum e_bool
 #include <float.h>
 
 
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
 
 typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
 	double	mul;
-}				t_vars;
+	t_data	img;
+}	t_vars;
+
+t_complex	cartesian_to_complex(int x, int y);
+double	complex_size(t_complex comp);
 
 
 #endif //FRACT_OL_H
