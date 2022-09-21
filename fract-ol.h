@@ -14,16 +14,19 @@
 #define FRACT_OL_H
 
 #include <unistd.h>
+#include <math.h>
 #include "minilibx_opengl_20191021/mlx.h"
 
 //# define Y_MAX 1200
 //# define X_MAX 1800
 # define Y_MAX 600
-# define X_MAX 900
+# define X_MAX 600
 # define ITER_MAX 1024
 # define IM_SIZE 4
 # define RE_SIZE 6
 # define ESCAPE_RADIUS 4
+# define SCROLL_UP 4
+# define SCROLL_DOWN 5
 
 typedef int t_bool;
 
@@ -60,15 +63,29 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
+
+typedef struct s_plane
+{
+	double imag_max;
+	double imag_min;
+	double real_min;
+	double real_max;
+}	t_plane;
+
 typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
 	double	mul;
 	t_data	img;
+	t_plane plane;
 }	t_vars;
+
+
 
 t_complex	cartesian_to_complex(int x, int y);
 double	complex_size(t_complex comp);
-
+t_complex	cartesian_to_complex2(int x, int y, int button, t_plane plane);
+double button_to_power(int button);
+t_plane	get_next_plane(t_plane plane, int x, int y, int button);
 
 #endif //FRACT_OL_H
