@@ -80,12 +80,10 @@ typedef struct	s_vars {
 	t_plane plane;
 }	t_vars;
 
-
-
-t_complex	cartesian_to_complex(int x, int y);
 double	complex_size(t_complex comp);
-t_complex	cartesian_to_complex2(int x, int y, int button, t_plane plane);
+t_complex	cartesian_to_complex(int x, int y, t_plane plane);
 double button_to_power(int button);
 t_plane	get_next_plane(t_plane plane, int x, int y, int button);
+
 
 #endif //FRACT_OL_H

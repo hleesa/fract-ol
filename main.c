@@ -30,6 +30,11 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
+{
+	return (*(int *)(unsigned char [4]){b, g, r, t});
+}
+
 int	mouse_hook(int button, int x, int y, t_vars *vars)
 {
 	printf("button:%d, x:%d, y:%d\n", button, x, y);
@@ -42,7 +47,7 @@ int	mouse_hook(int button, int x, int y, t_vars *vars)
 		for (int dx = 0; dx < X_MAX; ++dx)
 		{
 			t_complex z = {0.0, 0.0};
-			t_complex c = cartesian_to_complex2(dx, dy, button, next_plane);
+			t_complex c = cartesian_to_complex(dx, dy, next_plane);
 			int i = -1;
 			while (complex_size(z) <= ESCAPE_RADIUS && i < ITER_MAX)
 			{
@@ -51,7 +56,9 @@ int	mouse_hook(int button, int x, int y, t_vars *vars)
 				z.real = xtemp;
 				++i;
 			}
-			int color = (double)i / (double)ITER_MAX * (double)0x00ffffff;
+//			int color = (double)i / (double)ITER_MAX * (double)0xffffffff;
+			double mag = (double)i / (double)ITER_MAX;
+			int color = create_trgb((1-mag) * 255, mag*255, mag*255, mag * 255);
 			my_mlx_pixel_put(&vars->img, dx, dy, color);
 		}
 	}
@@ -72,15 +79,14 @@ int	main()
 	vars.img.img = mlx_new_image(vars.mlx, X_MAX, Y_MAX);
 	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bits_per_pixel, &vars.img.line_length,
 								 &vars.img.endian);
-	vars.plane =(t_plane){2, -2, -2, 2};
+	vars.plane =(t_plane){2, -2, -2.5, 1.5};
 	t_mouse_data mouse_data;
 	print_plane(vars.plane);
 	for (int dy = 0; dy < Y_MAX; ++dy)
 	{
 		for (int dx = 0; dx < X_MAX; ++dx)
 		{
-//			t_complex c = cartesian_to_complex(dx -x +X_MAX/2, dy -x+Y_MAX/2);
-			t_complex c = cartesian_to_complex2(dx, dy, 0, vars.plane);
+			t_complex c = cartesian_to_complex(dx, dy, vars.plane);
 			t_complex z = (t_complex) {0.0, 0.0};
 			int i = -1;
 			while (complex_size(z) <= ESCAPE_RADIUS && i < ITER_MAX)
@@ -90,15 +96,14 @@ int	main()
 				z.real = xtemp;
 				++i;
 			}
-			int color = (double)i / (double)ITER_MAX * (double)0x00ffffff;
-			my_mlx_pixel_put(vars.img.img, dx, dy, color);
+			double mag = (double)i / (double)ITER_MAX;
+			int color = create_trgb((1-mag) * 255, mag*255, mag*255, mag * 255);
+//			int color = (double)i / (double)ITER_MAX * (double)0x00ffffff;
+			my_mlx_pixel_put(&vars.img, dx, dy, color);
 		}
 	}
-
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
-
 	mlx_mouse_hook(vars.win, mouse_hook, &vars);
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
 	mlx_loop(vars.mlx);
 
 	return (0);
