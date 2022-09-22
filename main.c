@@ -12,96 +12,26 @@
 
 #include "fract-ol.h"
 
-
-void print_plane(t_plane plane)
-{
-	printf("im max:%f, ", plane.imag_max);
-	printf("im min:%f, ", plane.imag_min);
-	printf("re min:%f, ", plane.real_min);
-	printf("re max:%f\n", plane.real_max);
-
-}
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
-{
-	return (*(int *)(unsigned char [4]){b, g, r, t});
-}
-
 int	mouse_hook(int button, int x, int y, t_vars *vars)
 {
 	printf("button:%d, x:%d, y:%d\n", button, x, y);
-	if (y < 0 || button < 4)
-		return (0);
 	mlx_clear_window(vars->mlx, vars->win);
-	t_plane next_plane = get_next_plane(vars->plane, x, y, button);
-	for (int dy = 0; dy < Y_MAX; ++dy)
-	{
-		for (int dx = 0; dx < X_MAX; ++dx)
-		{
-			t_complex z = {0.0, 0.0};
-			t_complex c = cartesian_to_complex(dx, dy, next_plane);
-			int i = -1;
-			while (complex_size(z) <= ESCAPE_RADIUS && i < ITER_MAX)
-			{
-				double xtemp = z.real * z.real - z.imag * z.imag + c.real;
-				z.imag = 2 * z.real * z.imag + c.imag;
-				z.real = xtemp;
-				++i;
-			}
-//			int color = (double)i / (double)ITER_MAX * (double)0xffffffff;
-			double mag = (double)i / (double)ITER_MAX;
-			int color = create_trgb((1-mag) * 255, mag*255, mag*255, mag * 255);
-			my_mlx_pixel_put(&vars->img, dx, dy, color);
-		}
-	}
-	vars->plane = next_plane;
+	vars->plane = get_next_plane(vars->plane, x, y, button);
+//	get_mandelbrot_image(vars);
+	get_julia_image(vars);
 	print_plane(vars->plane);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
-	vars->mul *= vars->mul;
 	return (0);
 }
 
 int	main()
 {
-
 	t_vars vars;
-	vars.mul = 1;
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, X_MAX, Y_MAX, "fract-ol");
-	vars.img.img = mlx_new_image(vars.mlx, X_MAX, Y_MAX);
-	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bits_per_pixel, &vars.img.line_length,
-								 &vars.img.endian);
-	vars.plane =(t_plane){2, -2, -2.5, 1.5};
-	t_mouse_data mouse_data;
+
+	init_vars(&vars);
 	print_plane(vars.plane);
-	for (int dy = 0; dy < Y_MAX; ++dy)
-	{
-		for (int dx = 0; dx < X_MAX; ++dx)
-		{
-			t_complex c = cartesian_to_complex(dx, dy, vars.plane);
-			t_complex z = (t_complex) {0.0, 0.0};
-			int i = -1;
-			while (complex_size(z) <= ESCAPE_RADIUS && i < ITER_MAX)
-			{
-				double xtemp = z.real * z.real - z.imag * z.imag + c.real;
-				z.imag = 2 * z.real * z.imag + c.imag;
-				z.real = xtemp;
-				++i;
-			}
-			double mag = (double)i / (double)ITER_MAX;
-			int color = create_trgb((1-mag) * 255, mag*255, mag*255, mag * 255);
-//			int color = (double)i / (double)ITER_MAX * (double)0x00ffffff;
-			my_mlx_pixel_put(&vars.img, dx, dy, color);
-		}
-	}
+//	get_mandelbrot_image(&vars);
+	get_julia_image(&vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
 	mlx_mouse_hook(vars.win, mouse_hook, &vars);
 	mlx_loop(vars.mlx);

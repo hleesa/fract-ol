@@ -41,10 +41,10 @@ double	abs_d(double src)
 double button_to_power(int button)
 {
 	if(button == 4)
-		return (0.25);
+		return (0.4);
 	else if (button == 5)
-		return (-0.25);
-	return (1);
+		return (-0.4);
+	return (0);
 }
 
 t_plane	get_next_plane(t_plane plane, int x, int y, int button)

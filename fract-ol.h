@@ -13,18 +13,18 @@
 #ifndef FRACT_OL_H
 #define FRACT_OL_H
 
-#include <unistd.h>
 #include <math.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "minilibx_opengl_20191021/mlx.h"
 
-//# define Y_MAX 1200
-//# define X_MAX 1800
 # define Y_MAX 600
 # define X_MAX 600
 # define ITER_MAX 1024
 # define IM_SIZE 4
 # define RE_SIZE 6
-# define ESCAPE_RADIUS 4
+# define MANDELBROT_ESCAPE_RADIUS 4
+# define JULIA_ESCAPE_RADIUS 4
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
 
@@ -49,7 +49,6 @@ enum e_bool
 	TRUE
 };
 
-#include <stdio.h>
 #include <limits.h>
 #include <float.h>
 
@@ -75,15 +74,28 @@ typedef struct s_plane
 typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
-	double	mul;
+	int		depth;
 	t_data	img;
 	t_plane plane;
 }	t_vars;
+
+
+
 
 double	complex_size(t_complex comp);
 t_complex	cartesian_to_complex(int x, int y, t_plane plane);
 double button_to_power(int button);
 t_plane	get_next_plane(t_plane plane, int x, int y, int button);
+void	init_vars(t_vars *vars);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
+void	get_mandelbrot_image(t_vars *vars);
+//int create_color(double mag, int depth);
+int create_color(double t);
+void	get_julia_image(t_vars *vars);
 
+
+
+void print_plane(t_plane plane);
 
 #endif //FRACT_OL_H
