@@ -15,6 +15,7 @@ NAME		= fractol
 MLXDIR		= ./minilibx_opengl_20191021
 MLXFILE		= libmlx.a
 
+
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -O3 -I$(PRINTFDIR)
 AR			= ar rcs

@@ -14,24 +14,35 @@
 
 int	mouse_hook(int button, int x, int y, t_vars *vars)
 {
-	printf("button:%d, x:%d, y:%d\n", button, x, y);
+	if(button ==SCROLL_UP)
+		++vars->depth;
+	else if (button == SCROLL_DOWN)
+		--vars->depth;
+	printf("button:%d, x:%d, y:%d, dep:%d\n", button, x, y, vars->depth);
 	mlx_clear_window(vars->mlx, vars->win);
 	vars->plane = get_next_plane(vars->plane, x, y, button);
-//	get_mandelbrot_image(vars);
-	get_julia_image(vars);
+	get_mandelbrot_image(vars);
+//	get_julia_image(vars);
 	print_plane(vars->plane);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	return (0);
 }
 
-int	main()
+int	main(int argc, char *argv[])
 {
 	t_vars vars;
 
+
+	char *d = "0.123456789";
+	t_bool is_e = FALSE;
+	double rst = ft_atof(d, &is_e);
+	printf("%.10f\n", rst);
+
+
 	init_vars(&vars);
 	print_plane(vars.plane);
-//	get_mandelbrot_image(&vars);
-	get_julia_image(&vars);
+	get_mandelbrot_image(&vars);
+//	get_julia_image(&vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
 	mlx_mouse_hook(vars.win, mouse_hook, &vars);
 	mlx_loop(vars.mlx);

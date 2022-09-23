@@ -19,7 +19,7 @@ void	get_julia_image(t_vars *vars)
 		for (int dx = 0; dx < X_MAX; ++dx)
 		{
 			t_complex z = cartesian_to_complex(dx, dy, vars->plane);
-			t_complex c = (t_complex) {0.285, 0.01};
+			t_complex c = (t_complex) {2.0, 2.0};
 			int i = -1;
 			while (complex_size(z) <= JULIA_ESCAPE_RADIUS&& i < ITER_MAX)
 			{

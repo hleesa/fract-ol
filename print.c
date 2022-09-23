@@ -12,6 +12,14 @@
 
 #include "fract-ol.h"
 
+int	intro_fractal_type(void)
+{
+	printf("mandelbrot\n");
+	printf("julia Re Im\n");
+	printf("salee\n\n");
+	return (-1);
+}
+
 void print_plane(t_plane plane)
 {
 	printf("im max:%f, ", plane.imag_max);

@@ -31,13 +31,6 @@ double	complex_size(t_complex comp)
 	return (comp.real * comp.real + comp.imag * comp.imag);
 }
 
-double	abs_d(double src)
-{
-	if (src < 0 )
-		return -src;
-	return src;
-}
-
 double button_to_power(int button)
 {
 	if(button == 4)
@@ -51,13 +44,13 @@ t_plane	get_next_plane(t_plane plane, int x, int y, int button)
 {
 	double power = button_to_power(button);
 
-	double imag_size = abs_d(plane.imag_max - plane.imag_min);
+	double imag_size = fabs(plane.imag_max - plane.imag_min);
 	double imag_min_to_dot = (double)(y) / (double)(Y_MAX) * imag_size;
 	double imag_max_to_dot = imag_size - imag_min_to_dot;
 	double imag_max = plane.imag_max - imag_max_to_dot * power;
 	double imag_min = plane.imag_min + imag_min_to_dot * power;
 
-	double real_size = abs_d(plane.real_max - plane.real_min);
+	double real_size = fabs(plane.real_max - plane.real_min);
 	double real_min_to_dot = (double)(x) / (double)(X_MAX) * real_size;
 	double real_max_to_dot = real_size - real_min_to_dot;
 	double real_max = plane.real_max - real_max_to_dot * power;
@@ -68,11 +61,11 @@ t_plane	get_next_plane(t_plane plane, int x, int y, int button)
 
 t_complex	cartesian_to_complex(int x, int y, t_plane plane)
 {
-	const double imag_size = abs_d(plane.imag_max - plane.imag_min);
+	const double imag_size = fabs(plane.imag_max - plane.imag_min);
 	double imag_min_to_dot = (double)(y) / (double)(Y_MAX) * imag_size;
 	double imag = plane.imag_min + imag_min_to_dot;
 
-	const double real_size = abs_d(plane.real_max - plane.real_min);
+	const double real_size = fabs(plane.real_max - plane.real_min);
 	double real_min_to_dot = (double)(x) / (double)(X_MAX) * real_size;
 	double real = plane.real_min + real_min_to_dot;
 	return ((t_complex){real, imag});

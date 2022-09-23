@@ -16,17 +16,21 @@
 #include <math.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include "libft/libft.h"
 #include "minilibx_opengl_20191021/mlx.h"
 
 # define Y_MAX 600
 # define X_MAX 600
-# define ITER_MAX 1024
+# define ITER_MAX 512
 # define IM_SIZE 4
 # define RE_SIZE 6
 # define MANDELBROT_ESCAPE_RADIUS 4
 # define JULIA_ESCAPE_RADIUS 4
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
+# define PARAM_END 4
+# define FRACTAL_TYPES 3
 
 typedef int t_bool;
 
@@ -48,10 +52,6 @@ enum e_bool
 	FALSE,
 	TRUE
 };
-
-#include <limits.h>
-#include <float.h>
-
 
 typedef struct s_data
 {
@@ -79,6 +79,19 @@ typedef struct	s_vars {
 	t_plane plane;
 }	t_vars;
 
+enum e_fractal
+{
+	MANDELBROT,
+	JULIA,
+	SALEE
+};
+
+typedef struct s_fractal
+{
+	int	name;
+	t_plane scope;
+	t_complex c;
+}	t_fractal;
 
 
 
@@ -94,8 +107,11 @@ void	get_mandelbrot_image(t_vars *vars);
 int create_color(double t);
 void	get_julia_image(t_vars *vars);
 
-
+int	intro_fractal_type(void);
+double	ft_atof(const char *str, int *is_error);
 
 void print_plane(t_plane plane);
+#include <limits.h>
+#include <float.h>
 
 #endif //FRACT_OL_H
