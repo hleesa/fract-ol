@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft/libft.h"
+#include "ft_printf/ft_printf.h"
 #include "minilibx_opengl_20191021/mlx.h"
 
 # define Y_MAX 600
@@ -71,12 +71,21 @@ typedef struct s_plane
 	double real_max;
 }	t_plane;
 
+
+typedef struct s_fractal
+{
+	int	name;
+	t_plane scope;
+	t_complex c;
+}	t_fractal;
+
 typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
 	int		depth;
 	t_data	img;
 	t_plane plane;
+    t_fractal fractal;
 }	t_vars;
 
 enum e_fractal
@@ -86,14 +95,6 @@ enum e_fractal
 	SALEE
 };
 
-typedef struct s_fractal
-{
-	int	name;
-	t_plane scope;
-	t_complex c;
-}	t_fractal;
-
-
 
 double	complex_size(t_complex comp);
 t_complex	cartesian_to_complex(int x, int y, t_plane plane);
@@ -102,15 +103,19 @@ t_plane	get_next_plane(t_plane plane, int x, int y, int button);
 void	init_vars(t_vars *vars);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
-void	get_mandelbrot_image(t_vars *vars);
 //int create_color(double mag, int depth);
 int create_color(double t);
 void	get_julia_image(t_vars *vars);
 
 int	intro_fractal_type(void);
-double	ft_atof(const char *str, int *is_error);
+double	ft_atof(const char *str);
+void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal);
+void    init_fractal_scope(t_fractal *fractal);
 
-void print_plane(t_plane plane);
+void	get_mandelbrot_image(t_vars *vars);
+
+
+void print_plane(t_plane *plane);
 #include <limits.h>
 #include <float.h>
 

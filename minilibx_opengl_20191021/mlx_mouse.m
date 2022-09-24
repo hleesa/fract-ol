@@ -48,6 +48,5 @@ int	mlx_mouse_get_pos(mlx_win_list_t *win, int *x, int *y)
   point = [thewin mouseLocationOutsideOfEventStream];
   *x = point.x;
   *y = NSHeight(pos) - 1 - point.y;
-
-	return (0);
+  return (0);
 }

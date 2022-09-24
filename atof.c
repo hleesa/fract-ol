@@ -12,7 +12,7 @@
 
 #include "fract-ol.h"
 
-long long	toll(const char *str, long long sign, size_t i, long long *precision)
+long long	tollp(const char *str, long long sign, size_t i, int *precision)
 {
 	long long		acc;
 	const long long	llmax = LONG_LONG_MAX;
@@ -22,13 +22,8 @@ long long	toll(const char *str, long long sign, size_t i, long long *precision)
 	while (str[i])
 	{
 		if (acc > llmax / 10 || (acc == llmax / 10 && str[i] - '0' \
-					> (llmax % 10)) || !ft_isdigit(str[i]) || *precision > 15)
-		{
-			if (sign == 1)
-				return (LONG_LONG_MAX);
-			else
-				return (LONG_LONG_MIN);
-		}
+					> (llmax % 10)) || !ft_isdigit(str[i]) || *precision >= 15)
+            exit(intro_fractal_type());
 		acc = acc * 10 + str[i] - '0';
 		++*precision;
 		++i;
@@ -36,7 +31,7 @@ long long	toll(const char *str, long long sign, size_t i, long long *precision)
 	return (sign * acc);
 }
 
-int	preprocess_to_dot(const char *str, size_t *i, long long *sign)
+t_bool  preprocess_to_dot(const char *str, size_t *i, long long *sign)
 {
 	*i = 0;
 	*sign = 1;
@@ -49,15 +44,15 @@ int	preprocess_to_dot(const char *str, size_t *i, long long *sign)
 		++*i;
 	}
 	if (str[*i] != '0')
-		return (0);
+		return (FALSE);
 	++*i;
 	if (str[*i] != '.')
-		return (0);
+		return (FALSE);
 	++*i;
-	return (1);
+	return (TRUE);
 }
 
-double	ft_atof(const char *str, int *is_error)
+double	ft_atof(const char *str)
 {
 	size_t		i;
 	long long	sign;
@@ -65,11 +60,9 @@ double	ft_atof(const char *str, int *is_error)
 	double		ret;
 	int			precision;
 
-	if (preprocess_to_dot(str, &i, &sign) == 0)
-		*is_error = 1;
-	atol = toll(str, sign, i, &precision);
-	if (str[i] == 0)
-		*is_error = 1;
-	ret = atol * pow(10, precision);
+	if (preprocess_to_dot(str, &i, &sign) == FALSE || str[i] == 0)
+        exit(intro_fractal_type());
+	atol = tollp(str, sign, i, &precision);
+	ret = atol * pow(10, -1 * precision);
 	return (ret);
 }

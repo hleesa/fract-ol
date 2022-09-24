@@ -71,5 +71,5 @@ void	get_mandelbrot_image(t_vars *vars)
 			int color = create_color(t);
 			my_mlx_pixel_put(&vars->img, dx, dy, color);
 		}
-	}
+    }
 }
