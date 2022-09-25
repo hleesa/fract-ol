@@ -32,7 +32,19 @@
 # define PARAM_END 4
 # define FRACTAL_TYPES 3
 
+
+#define KEY_W 13    // MacOS의 키보드 코드들이다.
+#define KEY_A 0     //
+#define KEY_S 1     // 위에서 부터 차례대로
+#define KEY_D 2     //
+#define KEY_ESC 53  // 'W' 'A' 'S' 'D' 'ESC'들의 키보드 코드이다.
+
 typedef int t_bool;
+//typedef struct s_cartesian
+//{
+//    int x;
+//    int y;
+//}   t_cartesian;
 
 typedef struct s_complex
 {
@@ -71,12 +83,12 @@ typedef struct s_plane
 	double real_max;
 }	t_plane;
 
-
 typedef struct s_fractal
 {
-	int	name;
-	t_plane scope;
-	t_complex c;
+    int	name;
+    t_plane scope;
+    t_complex z;
+    t_complex c;
 }	t_fractal;
 
 typedef struct	s_vars {
@@ -86,7 +98,9 @@ typedef struct	s_vars {
 	t_data	img;
 	t_plane plane;
     t_fractal fractal;
+    int     (*frt_ptr)(struct s_vars *vars, int y, int x);
 }	t_vars;
+
 
 enum e_fractal
 {
@@ -112,7 +126,12 @@ double	ft_atof(const char *str);
 void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal);
 void    init_fractal_scope(t_fractal *fractal);
 
-void	get_mandelbrot_image(t_vars *vars);
+//void	get_mandelbrot_image(t_vars *vars);
+void	get_fractal_image(t_vars *vars);
+int     get_mandelbrot_element(t_vars *vars, int y, int x);
+int     get_julia_element(t_vars *vars, int y, int x);
+int     get_salee_element(t_vars *vars, int y, int x);
+void    init_fractal_ptr(t_vars *vars);
 
 
 void print_plane(t_plane *plane);

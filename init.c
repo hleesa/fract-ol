@@ -12,6 +12,17 @@
 
 #include "fract-ol.h"
 
+void    init_fractal_ptr(t_vars *vars)
+{
+    if (vars->fractal.name == MANDELBROT)
+        vars->frt_ptr = get_mandelbrot_element;
+    else if (vars->fractal.name == JULIA)
+        vars->frt_ptr = get_julia_element;
+    else if (vars->fractal.name == SALEE)
+        vars->frt_ptr = get_salee_element;
+    return ;
+}
+
 void    init_fractal_scope(t_fractal *fractal)
 {
     const t_plane name_to_scope[FRACTAL_TYPES] = {
@@ -51,7 +62,7 @@ void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal)
 void	init_vars(t_vars *vars)
 {
 	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, X_MAX, Y_MAX, "fract-ol");
+	vars->win = mlx_new_window(vars->mlx, X_MAX, Y_MAX, "fractol");
 	vars->img.img = mlx_new_image(vars->mlx, X_MAX, Y_MAX);
 	vars->img.addr = mlx_get_data_addr(vars->img.img, &vars->img.bits_per_pixel, &vars->img.line_length,
 									  &vars->img.endian);
