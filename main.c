@@ -12,10 +12,6 @@
 
 #include "fractol.h"
 
-
-
-
-
 int	main(int argc, char *argv[])
 {
 	t_vars vars;
@@ -28,8 +24,6 @@ int	main(int argc, char *argv[])
 
     vars.fractal.color_type = 3;
     get_fractal_image(&vars);
-//	get_mandelbrot_image(&vars);
-//	get_julia_image(&vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
 	mlx_mouse_hook(vars.win, mouse_hook, &vars);
     mlx_key_hook(vars.win, key_hook, &vars);

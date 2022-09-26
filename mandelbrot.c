@@ -24,13 +24,12 @@ int     get_mandelbrot_element(t_vars *vars, int y, int x)
     c = cartesian_to_complex(x, y, vars->plane);
     sq = (t_complex){z.real * z.real, z.imag * z.imag};
     i = -1;
-    while (sq.real + sq.imag <= escape_radius && i < ITER_MAX)
+    while (sq.real + sq.imag <= escape_radius && ++i < ITER_MAX)
     {
         z.imag = 2 * z.real * z.imag + c.imag;
         z.real = sq.real - sq.imag + c.real;
         sq.real = z.real * z.real;
         sq.imag = z.imag * z.imag;
-        ++i;
     }
     if(i != 0 && i != ITER_MAX)
         i = i + 1 - log(log2(complex_size(z)));

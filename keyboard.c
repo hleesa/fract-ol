@@ -20,8 +20,8 @@ void    exit_fractol(t_vars *vars)
 
 t_plane	get_moved_plane(t_plane plane, int keycdoe)
 {
-    const double power = 0.2;
-    const int dir = keycdoe - 124;
+    const double power = 0.15;
+    const int dir = keycdoe - 123;
     const int di[4] = {0, 0, 1, -1};
     const int dr[4] = {-1, 1, 0, 0};
 
@@ -51,11 +51,8 @@ int	key_hook(int keycode, t_vars *vars)
 {
     if (keycode == KEY_ESC)
         exit_fractol(vars);
-    else if(124 <= keycode && keycode <= 126)
-    {
+    else if(123 <= keycode && keycode <= 126)
         move_frame(keycode, vars);
-    }
-
     return (0);
 }
 

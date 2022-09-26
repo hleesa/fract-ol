@@ -28,6 +28,7 @@ void    init_fractal_scope(t_fractal *fractal)
     const t_plane name_to_scope[FRACTAL_TYPES] = {
             {2, -2, -2.5, 1.5},{2, -2, -2, 2}, {2, -2, -2, 2}
     };
+    printf("fractor types:%d\n", fractal->name);
     fractal->scope = name_to_scope[fractal->name];
     return ;
 }
@@ -66,8 +67,8 @@ void	init_vars(t_vars *vars)
 	vars->img.img = mlx_new_image(vars->mlx, X_MAX, Y_MAX);
 	vars->img.addr = mlx_get_data_addr(vars->img.img, &vars->img.bits_per_pixel, &vars->img.line_length,
 									  &vars->img.endian);
-	vars->plane =(t_plane){2, -2, -2.5, 1.5};
-//	vars->plane =(t_plane){2, -2, -2, 2};
+//	vars->plane =(t_plane){2, -2, -2.5, 1.5};
+	vars->plane =(t_plane){2, -2, -2, 2};
 	vars->depth = 0;
 }
 

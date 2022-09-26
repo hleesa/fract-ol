@@ -12,22 +12,6 @@
 
 #include "fractol.h"
 
-/*
-t_complex	complex_mul(t_complex lhs, t_complex rhs)
-{
-	const double real = lhs.real * rhs.real - lhs.imag * rhs.imag;
-	const double imag = lhs.real * rhs.imag + lhs.imag * rhs.real;
-	return ((t_complex){real, imag});
-}
-
-t_complex	complex_sum(t_complex lhs, t_complex rhs, double sign)
-{
-	const double real = lhs.real + sign * rhs.real;
-	const double imag = lhs.imag + sign * rhs.imag;
-	return ((t_complex){real, imag});
-}
-*/
-
 double	complex_size(t_complex comp)
 {
 	return (comp.real * comp.real + comp.imag * comp.imag);
