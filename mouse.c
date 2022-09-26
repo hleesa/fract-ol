@@ -14,6 +14,10 @@
 
 void	zoom_in_out(int button, int x, int y, t_vars *vars)
 {
+	if (button == SCROLL_UP)
+		++vars->fractal.depth;
+	else if (button == SCROLL_DOWN)
+		--vars->fractal.depth;
 	printf("button:%d, x:%d, y:%d, dep:%d\n", button, x, y, vars->fractal.depth);
 	mlx_clear_window(vars->mlx, vars->win);
 	vars->fractal.scope = get_next_plane(vars->fractal.scope, x, Y_MAX - y, \
@@ -35,14 +39,8 @@ void	change_color(t_vars *vars)
 int	mouse_hook(int button, int x, int y, t_vars *vars)
 {
 	if (button == RIGHT_CLICK)
-	{
 		change_color(vars);
-		return (0);
-	}
-	if (button == SCROLL_UP)
-		++vars->fractal.depth;
-	else if (button == SCROLL_DOWN)
-		--vars->fractal.depth;
-	zoom_in_out(button, x, y, vars);
+	else if (button == SCROLL_UP || button == SCROLL_DOWN)
+		zoom_in_out(button, x, y, vars);
 	return (0);
 }

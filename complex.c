@@ -28,6 +28,7 @@ double	button_to_power(int button)
 
 t_plane	get_next_plane(t_plane plane, int x, int y, int button)
 {
+	t_plane			ret;
 	t_plane_info	real;
 	t_plane_info	imag;
 	const double	power = button_to_power(button);
@@ -35,14 +36,14 @@ t_plane	get_next_plane(t_plane plane, int x, int y, int button)
 	imag.size = fabs(plane.imag_max - plane.imag_min);
 	imag.min_to_dot = (double)(y) / (double)(Y_MAX)*imag.size;
 	imag.max_to_dot = imag.size - imag.min_to_dot;
-	imag.max = plane.imag_max - imag.max_to_dot * power;
-	imag.min = plane.imag_min + imag.min_to_dot * power;
+	ret.imag_max = plane.imag_max - imag.max_to_dot * power;
+	ret.imag_min = plane.imag_min + imag.min_to_dot * power;
 	real.size = fabs(plane.real_max - plane.real_min);
 	real.min_to_dot = (double)(x) / (double)(X_MAX)*real.size;
 	real.max_to_dot = real.size - real.min_to_dot;
-	real.max = plane.real_max - real.max_to_dot * power;
-	real.min = plane.real_min + real.min_to_dot * power;
-	return ((t_plane){imag.max, imag.min, real.min, real.max});
+	ret.real_max = plane.real_max - real.max_to_dot * power;
+	ret.real_min = plane.real_min + real.min_to_dot * power;
+	return (ret);
 }
 
 t_complex	cartesian_to_complex(int x, int y, t_plane plane)
