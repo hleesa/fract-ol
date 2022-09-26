@@ -18,24 +18,24 @@ void	init_fractal_ptr(t_vars *vars)
 		vars->frt_ptr = get_mandelbrot_element;
 	else if (vars->fractal.name == JULIA)
 		vars->frt_ptr = get_julia_element;
-	else if (vars->fractal.name == SALEE)
-		vars->frt_ptr = get_salee_element;
+	else if (vars->fractal.name == TRICORN)
+		vars->frt_ptr = get_tricorn_element;
 	return ;
 }
 
-void	init_fractal_scope(t_fractal *fractal)
+void	init_fractal_plane(t_fractal *fractal)
 {
-	const t_plane	name_to_scope[FRACTAL_TYPES] = {{2, -2, -2.5, 1.5},
-	{2, -2, -2, 2}, {2, -2, -2, 2}};
+	const t_plane	name_to_plane[FRACTAL_TYPES] = {{2, -2, -2.5, 1.5},
+	{2, -2, -2, 2}, {2.5, -2.5, -2.5, 2.5}};
 
-	fractal->scope = name_to_scope[fractal->name];
+	fractal->plane = name_to_plane[fractal->name];
 	return ;
 }
 
 void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal)
 {
 	int			i;
-	const char	*name[FRACTAL_TYPES] = {"mandelbrot", "julia", "salee"};
+	const char	*name[FRACTAL_TYPES] = {"mandelbrot", "julia", "tricorn"};
 
 	if (argc == 1)
 		return (exit(intro_fractal_type()));

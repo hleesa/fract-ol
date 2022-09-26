@@ -21,7 +21,7 @@ int	get_mandelbrot_element(t_vars *vars, int x, int y)
 	const double	escape_radius = 4;
 
 	z = vars->fractal.z;
-	c = cartesian_to_complex(x, y, vars->fractal.scope);
+	c = cartesian_to_complex(x, y, vars->fractal.plane);
 	sq = (t_complex){z.real * z.real, z.imag * z.imag};
 	i = -1;
 	while (sq.real + sq.imag <= escape_radius && ++i < ITER_MAX)

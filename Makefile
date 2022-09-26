@@ -35,7 +35,7 @@ SRCS_MANDA = \
 	mandelbrot.c \
 	mouse.c \
 	print.c \
-	salee.c \
+	tricorn.c \
 
 OBJS_MANDA = $(SRCS_MANDA:c=o)
 

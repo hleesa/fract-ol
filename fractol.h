@@ -89,7 +89,7 @@ typedef struct s_fractal
     int depth;
     int	name;
     int color_type;
-    t_plane scope;
+    t_plane plane;
     t_complex z;
     t_complex c;
 }	t_fractal;
@@ -107,7 +107,7 @@ enum e_fractal
 {
     MANDELBROT,
     JULIA,
-    SALEE
+    TRICORN
 };
 
 
@@ -123,19 +123,18 @@ void	get_julia_image(t_vars *vars);
 int	intro_fractal_type(void);
 double	ft_atof(const char *str);
 void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal);
-void    init_fractal_scope(t_fractal *fractal);
+void    init_fractal_plane(t_fractal *fractal);
 
 void	get_fractal_image(t_vars *vars);
 int     get_mandelbrot_element(t_vars *vars, int x, int y);
 int     get_julia_element(t_vars *vars, int x, int y);
-int     get_salee_element(t_vars *vars, int x, int y);
+int		get_tricorn_element(t_vars *vars, int x, int y);
 void    init_fractal_ptr(t_vars *vars);
 
 
 int create_color(int color_type, int i);
 int	mouse_hook(int button, int x, int y, t_vars *vars);
 int	key_hook(int keycode, t_vars *vars);
-int     get_salee_element(t_vars *vars, int y, int x);
 
 
 void print_plane(t_plane *plane);

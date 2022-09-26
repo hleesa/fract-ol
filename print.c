@@ -16,7 +16,7 @@ int	intro_fractal_type(void)
 {
 	printf("\nmandelbrot\n");
 	printf("julia Re Im\n");
-	printf("salee\n\n");
+	printf("tricorn\n\n");
 	return (-1);
 }
 

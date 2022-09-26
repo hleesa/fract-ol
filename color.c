@@ -24,7 +24,7 @@ int	create_color(int color_type, int i)
 	unsigned char	colors[3];
 	const double	t = (double)i / (double)ITER_MAX;
 
-	if (color_type == 3)
+	if (i == 0 ||color_type == 3)
 	{
 		mono = t * 255;
 		return (create_trgb(1 - mono, mono, mono, mono));

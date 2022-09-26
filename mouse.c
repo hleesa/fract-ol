@@ -20,10 +20,10 @@ void	zoom_in_out(int button, int x, int y, t_vars *vars)
 		--vars->fractal.depth;
 	printf("button:%d, x:%d, y:%d, dep:%d\n", button, x, y, vars->fractal.depth);
 	mlx_clear_window(vars->mlx, vars->win);
-	vars->fractal.scope = get_next_plane(vars->fractal.scope, x, Y_MAX - y, \
+	vars->fractal.plane = get_next_plane(vars->fractal.plane, x, Y_MAX - y, \
 	button);
 	get_fractal_image(vars);
-	print_plane(&vars->fractal.scope);
+	print_plane(&vars->fractal.plane);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 }
 
@@ -32,7 +32,7 @@ void	change_color(t_vars *vars)
 	vars->fractal.color_type = (vars->fractal.color_type + 1) % COLOR_TYPES;
 	mlx_clear_window(vars->mlx, vars->win);
 	get_fractal_image(vars);
-	print_plane(&vars->fractal.scope);
+	print_plane(&vars->fractal.plane);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 }
 

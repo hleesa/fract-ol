@@ -38,11 +38,11 @@ t_plane	get_moved_plane(t_plane plane, int keycdoe)
 
 void	move_frame(int keycode, t_vars *vars)
 {
-	get_moved_plane(vars->fractal.scope, keycode);
+	get_moved_plane(vars->fractal.plane, keycode);
 	mlx_clear_window(vars->mlx, vars->win);
-	vars->fractal.scope = get_moved_plane(vars->fractal.scope, keycode);
+	vars->fractal.plane = get_moved_plane(vars->fractal.plane, keycode);
 	get_fractal_image(vars);
-	print_plane(&vars->fractal.scope);
+	print_plane(&vars->fractal.plane);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 }
 
