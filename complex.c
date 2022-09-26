@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract-ol.h"
+#include "fractol.h"
 
 /*
 t_complex	complex_mul(t_complex lhs, t_complex rhs)

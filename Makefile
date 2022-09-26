@@ -24,12 +24,15 @@ RM			= rm -f
 
 SRCS_MANDA = \
 	atof.c \
+	color.c \
 	complex.c \
 	image.c \
 	init.c \
 	julia.c \
+	keyboard.c \
 	main.c \
 	mandelbrot.c \
+	mouse.c \
 	print.c \
 
 OBJS_MANDA = $(SRCS_MANDA:c=o)

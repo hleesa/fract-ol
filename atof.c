@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract-ol.h"
+#include "fractol.h"
 
 long long	tollp(const char *str, long long sign, size_t i, int *precision)
 {

@@ -10,34 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract-ol.h"
+#include "fractol.h"
 
-int	mouse_hook(int button, int x, int y, t_vars *vars)
-{
-	if(button ==SCROLL_UP)
-		++vars->depth;
-	else if (button == SCROLL_DOWN)
-		--vars->depth;
-	printf("button:%d, x:%d, y:%d, dep:%d\n", button, x, y, vars->depth);
-	mlx_clear_window(vars->mlx, vars->win);
-	vars->plane = get_next_plane(vars->plane, x, y, button);
-    get_fractal_image(vars);
-//	get_mandelbrot_image(vars);
-//	get_julia_image(vars);
-	print_plane(&vars->plane);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
-	return (0);
-}
 
-int	key_hook(int keycode, t_vars *vars)
-{
-    if (keycode == 53)
-    {
-        mlx_destroy_window(vars->mlx, vars->win);
-        exit(0);
-    }
-    return (0);
-}
+
+
 
 int	main(int argc, char *argv[])
 {
@@ -49,6 +26,7 @@ int	main(int argc, char *argv[])
 	print_plane(&vars.fractal.scope);
     init_fractal_ptr(&vars);
 
+    vars.fractal.color_type = 3;
     get_fractal_image(&vars);
 //	get_mandelbrot_image(&vars);
 //	get_julia_image(&vars);

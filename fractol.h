@@ -31,7 +31,8 @@
 # define SCROLL_DOWN 5
 # define PARAM_END 4
 # define FRACTAL_TYPES 3
-
+# define COLOR_TYPES 4
+# define RIGHT_CLICK 2
 
 #define KEY_W 13    // MacOS의 키보드 코드들이다.
 #define KEY_A 0     //
@@ -48,55 +49,56 @@ typedef int t_bool;
 
 typedef struct s_complex
 {
-	double	real;
-	double	imag;
+    double	real;
+    double	imag;
 }	t_complex;
 
 typedef struct s_mouse_data
 {
-	int button;
-	int x;
-	int y;
+    int button;
+    int x;
+    int y;
 }	t_mouse_data;
 
 enum e_bool
 {
-	FALSE,
-	TRUE
+    FALSE,
+    TRUE
 };
 
 typedef struct s_data
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+    void	*img;
+    char	*addr;
+    int		bits_per_pixel;
+    int		line_length;
+    int		endian;
 }	t_data;
 
 
 typedef struct s_plane
 {
-	double imag_max;
-	double imag_min;
-	double real_min;
-	double real_max;
+    double imag_max;
+    double imag_min;
+    double real_min;
+    double real_max;
 }	t_plane;
 
 typedef struct s_fractal
 {
     int	name;
+    int color_type;
     t_plane scope;
     t_complex z;
     t_complex c;
 }	t_fractal;
 
 typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-	int		depth;
-	t_data	img;
-	t_plane plane;
+    void	*mlx;
+    void	*win;
+    int		depth;
+    t_data	img;
+    t_plane plane;
     t_fractal fractal;
     int     (*frt_ptr)(struct s_vars *vars, int y, int x);
 }	t_vars;
@@ -104,9 +106,9 @@ typedef struct	s_vars {
 
 enum e_fractal
 {
-	MANDELBROT,
-	JULIA,
-	SALEE
+    MANDELBROT,
+    JULIA,
+    SALEE
 };
 
 
@@ -118,7 +120,6 @@ void	init_vars(t_vars *vars);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
 //int create_color(double mag, int depth);
-int create_color(double t);
 void	get_julia_image(t_vars *vars);
 
 int	intro_fractal_type(void);
@@ -133,6 +134,10 @@ int     get_julia_element(t_vars *vars, int y, int x);
 int     get_salee_element(t_vars *vars, int y, int x);
 void    init_fractal_ptr(t_vars *vars);
 
+
+int create_color(int color_type, int i);
+int	mouse_hook(int button, int x, int y, t_vars *vars);
+int	key_hook(int keycode, t_vars *vars);
 
 void print_plane(t_plane *plane);
 #include <limits.h>

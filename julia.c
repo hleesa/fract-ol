@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract-ol.h"
+#include "fractol.h"
 
 int     get_julia_element(t_vars *vars, int y, int x)
 {
@@ -78,10 +78,7 @@ void	get_julia_image(t_vars *vars)
 				z.real = xtemp;
 				++i;
 			}
-			if(i != ITER_MAX)
-				i = i + 1 - log(log2(complex_size(z)));
-			double t = (double)i / (double)ITER_MAX;
-			int color = create_color(t);
+			int color = create_color(0, i);
 			my_mlx_pixel_put(&vars->img, dx, dy, color);
 		}
 	}
