@@ -19,7 +19,6 @@ int	main(int argc, char *argv[])
 	init_vars(&vars);
 	init_fractal_arg(argc, &argv, &vars.fractal);
 	init_fractal_plane(&vars.fractal);
-	print_plane(&vars.fractal.plane);
 	init_fractal_ptr(&vars);
 	vars.fractal.color_type = 3;
 	get_fractal_image(&vars);

@@ -42,7 +42,6 @@ void	move_frame(int keycode, t_vars *vars)
 	mlx_clear_window(vars->mlx, vars->win);
 	vars->fractal.plane = get_moved_plane(vars->fractal.plane, keycode);
 	get_fractal_image(vars);
-	print_plane(&vars->fractal.plane);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 }
 
