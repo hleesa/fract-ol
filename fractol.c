@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   fractol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/22 13:34:26 by salee2            #+#    #+#             */
-/*   Updated: 2022/09/22 13:34:28 by salee2           ###   ########.fr       */
+/*   Created: 2022/09/26 14:34:50 by salee2            #+#    #+#             */
+/*   Updated: 2022/09/26 14:34:51 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	get_fractal_image(t_vars *vars)
 {
-	char	*dst;
+	int	dy;
+	int	dx;
+	int	color;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	dy = -1;
+	while (++dy < Y_MAX)
+	{
+		dx = -1;
+		while (++dx < X_MAX)
+		{
+			color = create_color(vars->fractal.color_type, \
+			vars->frt_ptr(vars, dx, dy));
+			my_mlx_pixel_put(&vars->img, dx, Y_MAX - dy, color);
+		}
+	}
 	return ;
 }

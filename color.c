@@ -12,27 +12,26 @@
 
 #include "fractol.h"
 
-int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
+int	create_trgb(unsigned char t, unsigned char r, unsigned char g, \
+unsigned char b)
 {
-    return (*(int *)(unsigned char [4]){b, g, r, t});
+	return (*(int *)(unsigned char [4]){b, g, r, t});
 }
 
-int create_color(int color_type, int i)
+int	create_color(int color_type, int i)
 {
-    unsigned char colors[3];
-    const double t = (double)i / (double)ITER_MAX;
+	unsigned char	mono;
+	unsigned char	colors[3];
+	const double	t = (double)i / (double)ITER_MAX;
 
-    if (color_type == 3)
-    {
-        unsigned char c = (t)*255;
-        return create_trgb(1-c,c,c,c);
-    }
-    colors[0] = (8.5 * pow((1 - t), 3) * t * 255);
-    colors[1] = (15 * pow((1 - t), 2) * pow(t, 2) * 255);
-    colors[2] = (9 * (1 - t) * pow(t, 3) * 255);
-    unsigned char r = colors[color_type % 3];
-    unsigned char g = colors[(color_type + 1) % 3];
-    unsigned char b = colors[(color_type + 2) % 3];
-
-    return create_trgb(t, r, g, b);
+	if (color_type == 3)
+	{
+		mono = t * 255;
+		return (create_trgb(1 - mono, mono, mono, mono));
+	}
+	colors[0] = (8.5 * pow((1 - t), 3) * t * 255);
+	colors[1] = (15 * pow((1 - t), 2) * pow(t, 2) * 255);
+	colors[2] = (9 * (1 - t) * pow(t, 3) * 255);
+	return (create_trgb(t, colors[color_type % 3], \
+	colors[(color_type + 1) % 3], colors[(color_type + 2) % 3]));
 }

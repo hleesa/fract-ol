@@ -17,9 +17,9 @@ double	complex_size(t_complex comp)
 	return (comp.real * comp.real + comp.imag * comp.imag);
 }
 
-double button_to_power(int button)
+double	button_to_power(int button)
 {
-	if(button == 4)
+	if (button == 4)
 		return (0.4);
 	else if (button == 5)
 		return (-0.4);
@@ -28,31 +28,34 @@ double button_to_power(int button)
 
 t_plane	get_next_plane(t_plane plane, int x, int y, int button)
 {
-	double power = button_to_power(button);
+	t_plane_info	real;
+	t_plane_info	imag;
+	const double	power = button_to_power(button);
 
-	double imag_size = fabs(plane.imag_max - plane.imag_min);
-	double imag_min_to_dot = (double)(y) / (double)(Y_MAX) * imag_size;
-	double imag_max_to_dot = imag_size - imag_min_to_dot;
-	double imag_max = plane.imag_max - imag_max_to_dot * power;
-	double imag_min = plane.imag_min + imag_min_to_dot * power;
-
-	double real_size = fabs(plane.real_max - plane.real_min);
-	double real_min_to_dot = (double)(x) / (double)(X_MAX) * real_size;
-	double real_max_to_dot = real_size - real_min_to_dot;
-	double real_max = plane.real_max - real_max_to_dot * power;
-	double real_min = plane.real_min + real_min_to_dot * power;
-
-	return (t_plane){imag_max, imag_min, real_min, real_max};
+	imag.size = fabs(plane.imag_max - plane.imag_min);
+	imag.min_to_dot = (double)(y) / (double)(Y_MAX)*imag.size;
+	imag.max_to_dot = imag.size - imag.min_to_dot;
+	imag.max = plane.imag_max - imag.max_to_dot * power;
+	imag.min = plane.imag_min + imag.min_to_dot * power;
+	real.size = fabs(plane.real_max - plane.real_min);
+	real.min_to_dot = (double)(x) / (double)(X_MAX)*real.size;
+	real.max_to_dot = real.size - real.min_to_dot;
+	real.max = plane.real_max - real.max_to_dot * power;
+	real.min = plane.real_min + real.min_to_dot * power;
+	return ((t_plane){imag.max, imag.min, real.min, real.max});
 }
 
 t_complex	cartesian_to_complex(int x, int y, t_plane plane)
 {
-	const double imag_size = fabs(plane.imag_max - plane.imag_min);
-	double imag_min_to_dot = (double)(y) / (double)(Y_MAX) * imag_size;
-	double imag = plane.imag_min + imag_min_to_dot;
+	t_complex		ret;
+	t_plane_info	real;
+	t_plane_info	imag;
 
-	const double real_size = fabs(plane.real_max - plane.real_min);
-	double real_min_to_dot = (double)(x) / (double)(X_MAX) * real_size;
-	double real = plane.real_min + real_min_to_dot;
-	return ((t_complex){real, imag});
+	imag.size = fabs(plane.imag_max - plane.imag_min);
+	imag.min_to_dot = (double)(y) / (double)(Y_MAX)*imag.size;
+	ret.imag = plane.imag_min + imag.min_to_dot;
+	real.size = fabs(plane.real_max - plane.real_min);
+	real.min_to_dot = (double)(x) / (double)(X_MAX)*real.size;
+	ret.real = plane.real_min + real.min_to_dot;
+	return (ret);
 }

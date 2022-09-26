@@ -20,10 +20,10 @@ int	intro_fractal_type(void)
 	return (-1);
 }
 
-void print_plane(t_plane *plane)
+void	print_plane(t_plane *plane)
 {
-	printf("im max:%f, ", plane->imag_max);
-	printf("im min:%f, ", plane->imag_min);
-	printf("re min:%f, ", plane->real_min);
-	printf("re max:%f\n", plane->real_max);
+	printf("im max:%.15f, ", plane->imag_max);
+	printf("im min:%.15f, ", plane->imag_min);
+	printf("re min:%.15f, ", plane->real_min);
+	printf("re max:%.15f\n", plane->real_max);
 }

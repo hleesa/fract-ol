@@ -12,48 +12,45 @@
 
 #include "fractol.h"
 
-void    exit_fractol(t_vars *vars)
+void	exit_fractol(t_vars *vars)
 {
-    mlx_destroy_window(vars->mlx, vars->win);
-    exit(0);
+	mlx_destroy_window(vars->mlx, vars->win);
+	exit(0);
 }
 
 t_plane	get_moved_plane(t_plane plane, int keycdoe)
 {
-    const double power = 0.15;
-    const int dir = keycdoe - 123;
-    const int di[4] = {0, 0, 1, -1};
-    const int dr[4] = {-1, 1, 0, 0};
+	t_plane		ret;
+	t_move_info	info;
+	const int	di[4] = {0, 0, -1, 1};
+	const int	dr[4] = {-1, 1, 0, 0};
 
-    double imag_size = fabs(plane.imag_max - plane.imag_min);
-    double imag_max = plane.imag_max + di[dir]*imag_size * power;
-    double imag_min = plane.imag_min + di[dir]*imag_size * power;
-
-    double real_size = fabs(plane.real_max - plane.real_min);
-    double real_max = plane.real_max + dr[dir]* real_size * power;
-    double real_min = plane.real_min + dr[dir]* real_size * power;
-
-    return (t_plane){imag_max, imag_min, real_min, real_max};
+	info.power = 0.15;
+	info.dir = keycdoe - 123;
+	info.size.imag = fabs(plane.imag_max - plane.imag_min);
+	info.size.real = fabs(plane.real_max - plane.real_min);
+	ret.imag_max = plane.imag_max + di[info.dir] * info.size.imag * info.power;
+	ret.imag_min = plane.imag_min + di[info.dir] * info.size.imag * info.power;
+	ret.real_max = plane.real_max + dr[info.dir] * info.size.real * info.power;
+	ret.real_min = plane.real_min + dr[info.dir] * info.size.real * info.power;
+	return (ret);
 }
 
-
-void    move_frame(int keycode, t_vars *vars)
+void	move_frame(int keycode, t_vars *vars)
 {
-    get_moved_plane(vars->plane, keycode);
-    mlx_clear_window(vars->mlx, vars->win);
-    vars->plane = get_moved_plane(vars->plane, keycode);
-    get_fractal_image(vars);
-    print_plane(&vars->plane);
-    mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
+	get_moved_plane(vars->fractal.scope, keycode);
+	mlx_clear_window(vars->mlx, vars->win);
+	vars->fractal.scope = get_moved_plane(vars->fractal.scope, keycode);
+	get_fractal_image(vars);
+	print_plane(&vars->fractal.scope);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 }
 
 int	key_hook(int keycode, t_vars *vars)
 {
-    if (keycode == KEY_ESC)
-        exit_fractol(vars);
-    else if(123 <= keycode && keycode <= 126)
-        move_frame(keycode, vars);
-    return (0);
+	if (keycode == KEY_ESC)
+		exit_fractol(vars);
+	else if (123 <= keycode && keycode <= 126)
+		move_frame(keycode, vars);
+	return (0);
 }
-
-

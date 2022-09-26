@@ -26,6 +26,7 @@ SRCS_MANDA = \
 	atof.c \
 	color.c \
 	complex.c \
+	fractol.c \
 	image.c \
 	init.c \
 	julia.c \
@@ -34,6 +35,7 @@ SRCS_MANDA = \
 	mandelbrot.c \
 	mouse.c \
 	print.c \
+	salee.c \
 
 OBJS_MANDA = $(SRCS_MANDA:c=o)
 

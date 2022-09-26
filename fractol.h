@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fract-ol.h                                         :+:      :+:    :+:   */
+/*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:59:50 by salee2            #+#    #+#             */
-/*   Updated: 2022/09/14 15:59:54 by salee2           ###   ########.fr       */
+/*   Updated: 2022/09/26 15:18:55 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,22 @@ typedef struct s_complex
     double	imag;
 }	t_complex;
 
+typedef struct s_plane_info
+{
+	double size;
+	double min_to_dot;
+	double max_to_dot;
+	double max;
+	double min;
+}	t_plane_info;
+
+typedef struct s_move_info
+{
+	int dir;
+	double power;
+	t_complex size;
+}	t_move_info;
+
 typedef struct s_mouse_data
 {
     int button;
@@ -86,6 +102,7 @@ typedef struct s_plane
 
 typedef struct s_fractal
 {
+    int depth;
     int	name;
     int color_type;
     t_plane scope;
@@ -96,9 +113,7 @@ typedef struct s_fractal
 typedef struct	s_vars {
     void	*mlx;
     void	*win;
-    int		depth;
     t_data	img;
-    t_plane plane;
     t_fractal fractal;
     int     (*frt_ptr)(struct s_vars *vars, int y, int x);
 }	t_vars;
@@ -129,15 +144,17 @@ void    init_fractal_scope(t_fractal *fractal);
 
 //void	get_mandelbrot_image(t_vars *vars);
 void	get_fractal_image(t_vars *vars);
-int     get_mandelbrot_element(t_vars *vars, int y, int x);
-int     get_julia_element(t_vars *vars, int y, int x);
-int     get_salee_element(t_vars *vars, int y, int x);
+int     get_mandelbrot_element(t_vars *vars, int x, int y);
+int     get_julia_element(t_vars *vars, int x, int y);
+int     get_salee_element(t_vars *vars, int x, int y);
 void    init_fractal_ptr(t_vars *vars);
 
 
 int create_color(int color_type, int i);
 int	mouse_hook(int button, int x, int y, t_vars *vars);
 int	key_hook(int keycode, t_vars *vars);
+int     get_salee_element(t_vars *vars, int y, int x);
+
 
 void print_plane(t_plane *plane);
 #include <limits.h>
