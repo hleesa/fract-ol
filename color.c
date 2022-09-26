@@ -32,6 +32,6 @@ int	create_color(int color_type, int i)
 	colors[0] = (8.5 * pow((1 - t), 3) * t * 255);
 	colors[1] = (15 * pow((1 - t), 2) * pow(t, 2) * 255);
 	colors[2] = (9 * (1 - t) * pow(t, 3) * 255);
-	return (create_trgb(t, colors[color_type % 3], \
+	return (create_trgb((t * 255), colors[color_type % 3], \
 	colors[(color_type + 1) % 3], colors[(color_type + 2) % 3]));
 }
