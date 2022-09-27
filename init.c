@@ -12,26 +12,6 @@
 
 #include "fractol.h"
 
-void	init_fractal_ptr(t_vars *vars)
-{
-	if (vars->fractal.name == MANDELBROT)
-		vars->frt_ptr = get_mandelbrot_element;
-	else if (vars->fractal.name == JULIA)
-		vars->frt_ptr = get_julia_element;
-	else if (vars->fractal.name == TRICORN)
-		vars->frt_ptr = get_tricorn_element;
-	return ;
-}
-
-void	init_fractal_plane(t_fractal *fractal)
-{
-	const t_plane	name_to_plane[FRACTAL_TYPES] = {{2, -2, -2.5, 1.5},
-	{2, -2, -2, 2}, {2.5, -2.5, -2.5, 2.5}};
-
-	fractal->plane = name_to_plane[fractal->name];
-	return ;
-}
-
 void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal)
 {
 	int			i;
@@ -59,13 +39,41 @@ void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal)
 	return ;
 }
 
-void	init_vars(t_vars *vars)
+void	init_fractal_plane(t_fractal *fractal)
 {
-	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, X_MAX, Y_MAX, "fractol");
-	vars->img.img = mlx_new_image(vars->mlx, X_MAX, Y_MAX);
-	vars->img.addr = mlx_get_data_addr(vars->img.img, \
-	&vars->img.bits_per_pixel, &vars->img.line_length, &vars->img.endian);
+	const t_plane	name_to_plane[FRACTAL_TYPES] = {{2, -2, -2.5, 1.5},
+													 {2, -2, -2, 2}, {2.5, -2.5, -2.5, 2.5}};
+
+	fractal->plane = name_to_plane[fractal->name];
+	return ;
+}
+
+void	init_fractal_ptr(t_vars *vars)
+{
+	if (vars->fractal.name == MANDELBROT)
+		vars->frt_ptr = get_mandelbrot_element;
+	else if (vars->fractal.name == JULIA)
+		vars->frt_ptr = get_julia_element;
+	else if (vars->fractal.name == TRICORN)
+		vars->frt_ptr = get_tricorn_element;
+	return ;
+}
+
+void	init_fractal(int argc, char ***argv, t_vars *vars)
+{
 	vars->fractal.depth = 0;
+	vars->fractal.color_type = 3;
+	init_fractal_arg(argc, argv, &vars->fractal);
+	init_fractal_plane(&vars->fractal);
+	init_fractal_ptr(vars);
+	return ;
+}
+
+void	init(int argc, char ***argv, t_vars *vars)
+{
+	init_mlx_n_img(vars);
+	init_fractal(argc, argv, vars);
+	get_fractal_image(vars);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	return ;
 }

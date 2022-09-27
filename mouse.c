@@ -19,10 +19,11 @@ void	zoom_in_out(int button, int x, int y, t_vars *vars)
 	else if (button == SCROLL_DOWN)
 		--vars->fractal.depth;
 	mlx_clear_window(vars->mlx, vars->win);
-	vars->fractal.plane = get_next_plane(vars->fractal.plane, x, Y_MAX - y, \
+	vars->fractal.plane = get_zoomed_plane(&vars->fractal.plane, x, Y_MAX - y, \
 	button);
 	get_fractal_image(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
+	return ;
 }
 
 void	change_color(t_vars *vars)
@@ -31,6 +32,7 @@ void	change_color(t_vars *vars)
 	mlx_clear_window(vars->mlx, vars->win);
 	get_fractal_image(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
+	return ;
 }
 
 int	mouse_hook(int button, int x, int y, t_vars *vars)

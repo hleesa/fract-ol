@@ -29,13 +29,10 @@ SRCS_MANDA = \
 	fractol.c \
 	image.c \
 	init.c \
-	julia.c \
 	keyboard.c \
 	main.c \
-	mandelbrot.c \
 	mouse.c \
 	print.c \
-	tricorn.c \
 
 OBJS_MANDA = $(SRCS_MANDA:c=o)
 

@@ -12,6 +12,79 @@
 
 #include "fractol.h"
 
+int	get_mandelbrot_element(t_vars *vars, int x, int y)
+{
+	int				i;
+	t_complex		z;
+	t_complex		c;
+	t_complex		sq;
+	const double	escape_radius = 4;
+
+	z = vars->fractal.z;
+	c = cartesian_to_complex(x, y, &vars->fractal.plane);
+	sq = (t_complex){z.real * z.real, z.imag * z.imag};
+	i = -1;
+	while (sq.real + sq.imag <= escape_radius && ++i < ITER_MAX)
+	{
+		z.imag = 2 * z.real * z.imag + c.imag;
+		z.real = sq.real - sq.imag + c.real;
+		sq.real = z.real * z.real;
+		sq.imag = z.imag * z.imag;
+	}
+	if (i != 0 && i != ITER_MAX)
+		i = i + 1 - log(log2(sq.real + sq.imag));
+	return (i);
+}
+
+int	get_julia_element(t_vars *vars, int x, int y)
+{
+	int				i;
+	t_complex		z;
+	t_complex		c;
+	t_complex		sq;
+	const double	escape_radius = 4;
+
+	z = cartesian_to_complex(x, y, &vars->fractal.plane);
+	c = vars->fractal.c;
+	sq = (t_complex){z.real * z.real, z.imag * z.imag};
+	i = -1;
+	while (sq.real + sq.imag <= escape_radius && ++i < ITER_MAX)
+	{
+		z.imag = 2 * z.real * z.imag + c.imag;
+		z.real = sq.real - sq.imag + c.real;
+		sq.real = z.real * z.real;
+		sq.imag = z.imag * z.imag;
+	}
+	if (i != 0 && i != ITER_MAX)
+		i = i + 1 - log(log2(sq.real + sq.imag));
+	return (i);
+}
+
+int	get_tricorn_element(t_vars *vars, int x, int y)
+{
+	int				i;
+	t_complex		z;
+	t_complex		c;
+	t_complex		sq;
+	const double	escape_radius = 4;
+
+	z = vars->fractal.z;
+	c = cartesian_to_complex(x, y, &vars->fractal.plane);
+	sq = (t_complex){z.real * z.real, z.imag * z.imag};
+	i = -1;
+	while (sq.real + sq.imag <= escape_radius && ++i < ITER_MAX)
+	{
+		z.imag = -2 * z.real * z.imag + c.imag;
+		z.real = sq.real - sq.imag + c.real;
+		sq.real = z.real * z.real;
+		sq.imag = z.imag * z.imag;
+	}
+	if (i != 0 && i != ITER_MAX)
+		i = i + 1 - log(log2(sq.real + sq.imag));
+	return (i);
+}
+
+
 void	get_fractal_image(t_vars *vars)
 {
 	int	dy;

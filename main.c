@@ -16,13 +16,7 @@ int	main(int argc, char *argv[])
 {
 	t_vars	vars;
 
-	init_vars(&vars);
-	init_fractal_arg(argc, &argv, &vars.fractal);
-	init_fractal_plane(&vars.fractal);
-	init_fractal_ptr(&vars);
-	vars.fractal.color_type = 3;
-	get_fractal_image(&vars);
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
+	init(argc, &argv, &vars);
 	mlx_mouse_hook(vars.win, mouse_hook, &vars);
 	mlx_key_hook(vars.win, key_hook, &vars);
 	mlx_loop(vars.mlx);
