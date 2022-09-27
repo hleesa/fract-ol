@@ -37,14 +37,14 @@ int	get_fractal_element(t_vars *vars, int x, int y, int sign)
 	set_z_c(vars, &z, &c, (t_cartesian){x, y});
 	sq = (t_complex){z.real * z.real, z.imag * z.imag};
 	i = -1;
-	while (sq.real + sq.imag <= ESCAPE_RADIUS && ++i < ITER_MAX)
+	while (sq.real + sq.imag <= ESCAPE_RADIUS && ++i < ITER_END)
 	{
 		z.imag = 2 * sign * z.real * z.imag + c.imag;
 		z.real = sq.real - sq.imag + c.real;
 		sq.real = z.real * z.real;
 		sq.imag = z.imag * z.imag;
 	}
-	if (i != 0 && i != ITER_MAX)
+	if (i != 0 && i != ITER_END)
 		i = i + 1 - log(log2(sq.real + sq.imag));
 	return (i);
 }
@@ -64,14 +64,14 @@ void	get_fractal_image(t_vars *vars)
 	const int	sign = get_element_sign(&vars->fractal);
 
 	dy = -1;
-	while (++dy < Y_MAX)
+	while (++dy < Y_END)
 	{
 		dx = -1;
-		while (++dx < X_MAX)
+		while (++dx < X_END)
 		{
 			color = create_color(vars->fractal.color_type, \
 			get_fractal_element(vars, dx, dy, sign));
-			my_mlx_pixel_put(&vars->img, dx, Y_MAX - dy, color);
+			my_mlx_pixel_put(&vars->img, dx, Y_END - dy, color);
 		}
 	}
 	return ;

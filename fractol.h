@@ -20,14 +20,26 @@
 # include "ft_printf/ft_printf.h"
 # include "minilibx_opengl_20191021/mlx.h"
 
-# define Y_MAX 600
-# define X_MAX 600
-# define ITER_MAX 512
+# define X_END 600
+# define Y_END 600
+# define ITER_END 512
 # define PARAM_END 4
 # define FRACTAL_TYPES 3
 # define COLOR_TYPES 4
 # define ESCAPE_RADIUS 4
-# define SCALE_DEPTH 100
+
+enum e_bool
+{
+	FALSE,
+	TRUE
+};
+
+enum e_fractal
+{
+	MANDELBROT,
+	JULIA,
+	TRICORN
+};
 
 enum e_mouse
 {
@@ -45,25 +57,19 @@ enum e_key
 	UP_ARROW = 126,
 };
 
-enum e_bool
-{
-	FALSE,
-	TRUE
-};
-
 typedef int	t_bool;
-
-typedef struct s_complex
-{
-	double	real;
-	double	imag;
-}	t_complex;
 
 typedef struct s_cartesian
 {
 	int	x;
 	int	y;
 }	t_cartesian;
+
+typedef struct s_complex
+{
+	double	real;
+	double	imag;
+}	t_complex;
 
 typedef struct s_plane_info
 {
@@ -112,13 +118,6 @@ typedef struct s_vars
 	t_mlx_data	img;
 	t_fractal	fractal;
 }	t_vars;
-
-enum e_fractal
-{
-	MANDELBROT,
-	JULIA,
-	TRICORN
-};
 
 t_complex	cartesian_to_complex(int x, int y, t_plane *plane);
 double		button_to_power(int button);

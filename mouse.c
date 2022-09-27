@@ -15,7 +15,7 @@
 void	zoom_in_out(int button, int x, int y, t_vars *vars)
 {
 	mlx_clear_window(vars->mlx, vars->win);
-	vars->fractal.plane = get_zoomed_plane(&vars->fractal.plane, x, Y_MAX - y, \
+	vars->fractal.plane = get_zoomed_plane(&vars->fractal.plane, x, Y_END - y, \
 	button);
 	get_fractal_image(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);

@@ -22,7 +22,7 @@ int	create_color(int color_type, int i)
 {
 	unsigned char	mono;
 	unsigned char	colors[3];
-	const double	t = (double)i / (double)ITER_MAX;
+	const double	t = (double)i / (double)ITER_END;
 
 	if (color_type == 3)
 	{

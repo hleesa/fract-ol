@@ -24,8 +24,8 @@ void	my_mlx_pixel_put(t_mlx_data *data, int x, int y, int color)
 void	init_mlx_n_img(t_vars *vars)
 {
 	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, X_MAX, Y_MAX, "fractol");
-	vars->img.img = mlx_new_image(vars->mlx, X_MAX, Y_MAX);
+	vars->win = mlx_new_window(vars->mlx, X_END, Y_END, "fractol");
+	vars->img.img = mlx_new_image(vars->mlx, X_END, Y_END);
 	vars->img.addr = mlx_get_data_addr(vars->img.img, \
 	&vars->img.bits_per_pixel, &vars->img.line_length, &vars->img.endian);
 	return ;
