@@ -21,7 +21,7 @@ unsigned char b)
 int	create_color(int color_type, int i)
 {
 	unsigned char	mono;
-	unsigned char	colors[3];
+	unsigned char	colors[COLOR_TYPES];
 	const double	t = (double)i / (double)ITER_END;
 
 	if (color_type == 3)
