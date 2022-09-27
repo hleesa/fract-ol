@@ -14,8 +14,10 @@
 
 int	intro_fractal_type(void)
 {
-	printf("\nmandelbrot\n");
-	printf("julia Re Im\n");
-	printf("tricorn\n\n");
+	printf("usage : fractol [fractals] [real number] [imaginary number]\n");
+	printf(" fractals :\n");
+	printf(" --> mandelbrot\n");
+	printf(" --> julia\n");
+	printf(" --> tricorn\n");
 	return (-1);
 }
