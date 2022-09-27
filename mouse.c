@@ -14,10 +14,6 @@
 
 void	zoom_in_out(int button, int x, int y, t_vars *vars)
 {
-	if (button == SCROLL_UP)
-		++vars->fractal.depth;
-	else if (button == SCROLL_DOWN)
-		--vars->fractal.depth;
 	mlx_clear_window(vars->mlx, vars->win);
 	vars->fractal.plane = get_zoomed_plane(&vars->fractal.plane, x, Y_MAX - y, \
 	button);

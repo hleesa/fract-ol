@@ -41,23 +41,22 @@ long long	toll(const char *str, long long sign, size_t i)
 	return (sign * acc);
 }
 
-int	ft_atoi(const char *str, int *is_error)
+int	ft_atoi(const char *str, int *is_error, double *sign)
 {
 	size_t		i;
-	long long	sign;
 	long long	ret;
 
 	i = 0;
-	sign = 1;
+	*sign = 1;
 	while (is_space(str[i]))
 		++i;
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-			sign = -1;
+			*sign = -1;
 		++i;
 	}
-	ret = toll(str, sign, i);
+	ret = toll(str, *sign, i);
 	if (str[i] == 0 || ret > INT_MAX || ret < INT_MIN)
 		*is_error = 1;
 	return ((int) ret);

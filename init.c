@@ -36,6 +36,7 @@ void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal)
 		return (exit(intro_fractal_type()));
 	fractal->c.real = ft_atof((*argv)[2]);
 	fractal->c.imag = ft_atof((*argv)[3]);
+	printf("r:%.15f, i:%.15f", fractal->c.real, fractal->c.imag);
 	return ;
 }
 

@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-long long	tollp(const char *str, long long sign, size_t i, int *precision)
+long long	tollp(const char *str, size_t i, int *precision)
 {
 	long long		acc;
 	const long long	llmax = LONG_LONG_MAX;
@@ -28,44 +28,31 @@ long long	tollp(const char *str, long long sign, size_t i, int *precision)
 		++*precision;
 		++i;
 	}
-	return (sign * acc);
-}
-
-t_bool	preprocess_to_dot(const char *str, size_t *i, long long *sign)
-{
-	*i = 0;
-	*sign = 1;
-	while (is_space(str[*i]))
-		++*i;
-	if (str[*i] == '+' || str[*i] == '-')
-	{
-		if (str[*i] == '-')
-			*sign = -1;
-		++*i;
-	}
-	if (str[*i] != '0')
-		return (FALSE);
-	++*i;
-	if (str[*i] != '.')
-		return (FALSE);
-	++*i;
-	return (TRUE);
+	return (acc);
 }
 
 double	ft_atof(const char *str)
 {
-	size_t		i;
-	long long	sign;
-	long long	atol;
-	double		ret;
-	int			precision;
-	t_bool		is_error;
+	size_t	i;
+	double	ret;
+	double	sign;
+	int		precision;
+	t_bool	is_error;
 
-	ret = ft_atoi(str, &is_error);
-
-	if (preprocess_to_dot(str, &i, &sign) == FALSE || str[i] == 0)
+	is_error = 0;
+	ret = ft_atoi(str, &is_error, &sign);
+	if (is_error)
 		exit(intro_fractal_type());
-	atol = tollp(str, sign, i, &precision);
-	ret += atol * pow(10, -1 * precision);
+	i = 0;
+	while (str[i] && str[i] != '.')
+		++i;
+	if (str[i] == 0)
+		return (ret);
+	if (str[i + 1] == 0)
+		exit(intro_fractal_type());
+	if (sign == 1)
+		ret = ret + tollp(str, i + 1, &precision) * pow(10, -1 * precision);
+	else
+		ret = ret - tollp(str, i + 1, &precision) * pow(10, -1 * precision);
 	return (ret);
 }
