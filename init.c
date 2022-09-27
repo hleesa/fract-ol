@@ -41,31 +41,18 @@ void	init_fractal_arg(int argc, char ***argv, t_fractal *fractal)
 
 void	init_fractal_plane(t_fractal *fractal)
 {
-	const t_plane	name_to_plane[FRACTAL_TYPES] = {{2, -2, -2.5, 1.5},
-													 {2, -2, -2, 2}, {2.5, -2.5, -2.5, 2.5}};
+	const t_plane	name_to_plane[FRACTAL_TYPES] = {{2, -2, -2.5, 1.5}, \
+	{2, -2, -2, 2}, {2.5, -2.5, -2.5, 2.5}};
 
 	fractal->plane = name_to_plane[fractal->name];
 	return ;
 }
 
-void	init_fractal_ptr(t_vars *vars)
-{
-	if (vars->fractal.name == MANDELBROT)
-		vars->frt_ptr = get_mandelbrot_element;
-	else if (vars->fractal.name == JULIA)
-		vars->frt_ptr = get_julia_element;
-	else if (vars->fractal.name == TRICORN)
-		vars->frt_ptr = get_tricorn_element;
-	return ;
-}
-
 void	init_fractal(int argc, char ***argv, t_vars *vars)
 {
-	vars->fractal.depth = 0;
 	vars->fractal.color_type = 3;
 	init_fractal_arg(argc, argv, &vars->fractal);
 	init_fractal_plane(&vars->fractal);
-	init_fractal_ptr(vars);
 	return ;
 }
 

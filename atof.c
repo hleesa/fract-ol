@@ -59,10 +59,13 @@ double	ft_atof(const char *str)
 	long long	atol;
 	double		ret;
 	int			precision;
+	t_bool		is_error;
+
+	ret = ft_atoi(str, &is_error);
 
 	if (preprocess_to_dot(str, &i, &sign) == FALSE || str[i] == 0)
 		exit(intro_fractal_type());
 	atol = tollp(str, sign, i, &precision);
-	ret = atol * pow(10, -1 * precision);
+	ret += atol * pow(10, -1 * precision);
 	return (ret);
 }

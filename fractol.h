@@ -26,6 +26,8 @@
 # define PARAM_END 4
 # define FRACTAL_TYPES 3
 # define COLOR_TYPES 4
+# define ESCAPE_RADIUS 4
+# define SCALE_DEPTH 100
 
 enum e_mouse
 {
@@ -56,6 +58,12 @@ typedef struct s_complex
 	double	real;
 	double	imag;
 }	t_complex;
+
+typedef struct s_cartesian
+{
+	int	x;
+	int	y;
+}	t_cartesian;
 
 typedef struct s_plane_info
 {
@@ -90,7 +98,6 @@ typedef struct s_plane
 
 typedef struct s_fractal
 {
-	int			depth;
 	int			name;
 	int			color_type;
 	t_plane		plane;
@@ -104,7 +111,6 @@ typedef struct s_vars
 	void		*win;
 	t_mlx_data	img;
 	t_fractal	fractal;
-	int			(*frt_ptr)(struct s_vars *vars, int y, int x);
 }	t_vars;
 
 enum e_fractal
@@ -127,15 +133,11 @@ double		ft_atof(const char *str);
 void		init_fractal_arg(int argc, char ***argv, t_fractal *fractal);
 void		init_fractal_plane(t_fractal *fractal);
 void		get_fractal_image(t_vars *vars);
-int			get_mandelbrot_element(t_vars *vars, int x, int y);
-int			get_julia_element(t_vars *vars, int x, int y);
-int			get_tricorn_element(t_vars *vars, int x, int y);
 void		init_fractal_ptr(t_vars *vars);
 int			create_color(int color_type, int i);
 int			mouse_hook(int button, int x, int y, t_vars *vars);
 int			key_hook(int keycode, t_vars *vars);
 void		init_fractal(int argc, char ***argv, t_vars *vars);
 void		init(int argc, char ***argv, t_vars *vars);
-
 
 #endif //FRACTOL_H

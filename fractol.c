@@ -12,21 +12,34 @@
 
 #include "fractol.h"
 
-int	get_mandelbrot_element(t_vars *vars, int x, int y)
+void	set_z_c(t_vars *vars, t_complex *z, t_complex *c, t_cartesian coord)
+{
+	if (vars->fractal.name == JULIA)
+	{
+		*z = cartesian_to_complex(coord.x, coord.y, &vars->fractal.plane);
+		*c = vars->fractal.c;
+	}
+	else
+	{
+		*z = vars->fractal.z;
+		*c = cartesian_to_complex(coord.x, coord.y, &vars->fractal.plane);
+	}
+	return ;
+}
+
+int	get_fractal_element(t_vars *vars, int x, int y, int sign)
 {
 	int				i;
 	t_complex		z;
 	t_complex		c;
 	t_complex		sq;
-	const double	escape_radius = 4;
 
-	z = vars->fractal.z;
-	c = cartesian_to_complex(x, y, &vars->fractal.plane);
+	set_z_c(vars, &z, &c, (t_cartesian){x, y});
 	sq = (t_complex){z.real * z.real, z.imag * z.imag};
 	i = -1;
-	while (sq.real + sq.imag <= escape_radius && ++i < ITER_MAX)
+	while (sq.real + sq.imag <= ESCAPE_RADIUS && ++i < ITER_MAX)
 	{
-		z.imag = 2 * z.real * z.imag + c.imag;
+		z.imag = 2 * sign * z.real * z.imag + c.imag;
 		z.real = sq.real - sq.imag + c.real;
 		sq.real = z.real * z.real;
 		sq.imag = z.imag * z.imag;
@@ -36,60 +49,19 @@ int	get_mandelbrot_element(t_vars *vars, int x, int y)
 	return (i);
 }
 
-int	get_julia_element(t_vars *vars, int x, int y)
+int	get_element_sign(t_fractal *fractal)
 {
-	int				i;
-	t_complex		z;
-	t_complex		c;
-	t_complex		sq;
-	const double	escape_radius = 4;
-
-	z = cartesian_to_complex(x, y, &vars->fractal.plane);
-	c = vars->fractal.c;
-	sq = (t_complex){z.real * z.real, z.imag * z.imag};
-	i = -1;
-	while (sq.real + sq.imag <= escape_radius && ++i < ITER_MAX)
-	{
-		z.imag = 2 * z.real * z.imag + c.imag;
-		z.real = sq.real - sq.imag + c.real;
-		sq.real = z.real * z.real;
-		sq.imag = z.imag * z.imag;
-	}
-	if (i != 0 && i != ITER_MAX)
-		i = i + 1 - log(log2(sq.real + sq.imag));
-	return (i);
+	if (fractal->name == TRICORN)
+		return (-1);
+	return (1);
 }
-
-int	get_tricorn_element(t_vars *vars, int x, int y)
-{
-	int				i;
-	t_complex		z;
-	t_complex		c;
-	t_complex		sq;
-	const double	escape_radius = 4;
-
-	z = vars->fractal.z;
-	c = cartesian_to_complex(x, y, &vars->fractal.plane);
-	sq = (t_complex){z.real * z.real, z.imag * z.imag};
-	i = -1;
-	while (sq.real + sq.imag <= escape_radius && ++i < ITER_MAX)
-	{
-		z.imag = -2 * z.real * z.imag + c.imag;
-		z.real = sq.real - sq.imag + c.real;
-		sq.real = z.real * z.real;
-		sq.imag = z.imag * z.imag;
-	}
-	if (i != 0 && i != ITER_MAX)
-		i = i + 1 - log(log2(sq.real + sq.imag));
-	return (i);
-}
-
 
 void	get_fractal_image(t_vars *vars)
 {
-	int	dy;
-	int	dx;
-	int	color;
+	int			dy;
+	int			dx;
+	int			color;
+	const int	sign = get_element_sign(&vars->fractal);
 
 	dy = -1;
 	while (++dy < Y_MAX)
@@ -98,7 +70,7 @@ void	get_fractal_image(t_vars *vars)
 		while (++dx < X_MAX)
 		{
 			color = create_color(vars->fractal.color_type, \
-			vars->frt_ptr(vars, dx, dy));
+			get_fractal_element(vars, dx, dy, sign));
 			my_mlx_pixel_put(&vars->img, dx, Y_MAX - dy, color);
 		}
 	}

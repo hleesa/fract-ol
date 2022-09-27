@@ -25,7 +25,7 @@ long long	toll(const char *str, long long sign, size_t i)
 	const long long	llmax = LONG_LONG_MAX;
 
 	acc = 0;
-	while (str[i])
+	while (str[i] && str[i] != '.')
 	{
 		if (acc > llmax / 10 || (acc == llmax / 10 && str[i] - '0' \
 					> (llmax % 10)) || !ft_isdigit(str[i]))
