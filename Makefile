@@ -10,7 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME		= fractol
 MLXDIR		= ./minilibx_opengl_20191021
 MLXFILE		= libmlx.a
@@ -38,6 +37,8 @@ OBJS_MANDA = $(SRCS_MANDA:c=o)
 
 all: $(NAME)
 
+bonus: $(NAME)
+
 $(NAME): $(OBJS_MANDA)
 	make -C $(MLXDIR)
 	make -C $(PRINTFDIR)
@@ -54,7 +55,7 @@ clean:
 fclean: clean
 	make -C $(PRINTFDIR) fclean
 	make -C $(MLXDIR) clean
-	$(RM) $(NAME) $(BONUS)
+	$(RM) $(NAME)
 
 re: fclean
 	make all
