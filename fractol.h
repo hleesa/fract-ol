@@ -23,7 +23,6 @@
 # define X_END 600
 # define Y_END 600
 # define ITER_END 512
-# define PARAM_END 4
 # define FRACTAL_TYPES 3
 # define COLOR_TYPES 4
 # define ESCAPE_RADIUS 4
