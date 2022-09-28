@@ -12,6 +12,11 @@
 
 #include "fractol.h"
 
+int	red_cross(void)
+{
+	exit(0);
+}
+
 void	zoom_in_out(int button, int x, int y, t_vars *vars)
 {
 	mlx_clear_window(vars->mlx, vars->win);

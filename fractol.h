@@ -43,6 +43,7 @@ enum e_fractal
 
 enum e_mouse
 {
+	LEFT_CLICK = 1,
 	RIGHT_CLICK = 2,
 	SCROLL_UP = 4,
 	SCROLL_DOWN = 5
@@ -119,24 +120,20 @@ typedef struct s_vars
 	t_fractal	fractal;
 }	t_vars;
 
-t_complex	cartesian_to_complex(int x, int y, t_plane *plane);
-double		button_to_power(int button);
-t_plane		get_zoomed_plane(t_plane *plane, int x, int y, int button);
-void		init_mlx_n_img(t_vars *vars);
-void		my_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
-int			create_trgb(unsigned char t, unsigned char r, unsigned char g, \
-unsigned char b);
-void		get_julia_image(t_vars *vars);
-int			intro_fractal_type(void);
 double		ft_atof(const char *str);
+int			create_color(int color_type, int i);
+t_plane		get_zoomed_plane(t_plane *plane, int x, int y, int button);
+t_complex	cartesian_to_complex(int x, int y, t_plane *plane);
+void		get_fractal_image(t_vars *vars);
+void		my_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
+void		init_mlx_n_img(t_vars *vars);
 void		init_fractal_arg(int argc, char ***argv, t_fractal *fractal);
 void		init_fractal_plane(t_fractal *fractal);
-void		get_fractal_image(t_vars *vars);
-void		init_fractal_ptr(t_vars *vars);
-int			create_color(int color_type, int i);
-int			mouse_hook(int button, int x, int y, t_vars *vars);
-int			key_hook(int keycode, t_vars *vars);
 void		init_fractal(int argc, char ***argv, t_vars *vars);
 void		init(int argc, char ***argv, t_vars *vars);
+int			key_hook(int keycode, t_vars *vars);
+int			red_cross(void);
+int			mouse_hook(int button, int x, int y, t_vars *vars);
+int			intro_fractal_type(void);
 
 #endif //FRACTOL_H

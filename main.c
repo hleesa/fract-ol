@@ -17,8 +17,9 @@ int	main(int argc, char *argv[])
 	t_vars	vars;
 
 	init(argc, &argv, &vars);
-	mlx_mouse_hook(vars.win, mouse_hook, &vars);
 	mlx_key_hook(vars.win, key_hook, &vars);
+	mlx_mouse_hook(vars.win, mouse_hook, &vars);
+	mlx_hook(vars.win, 17, 0L, red_cross, vars.mlx);
 	mlx_loop(vars.mlx);
 	return (0);
 }

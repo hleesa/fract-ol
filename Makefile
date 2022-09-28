@@ -18,10 +18,10 @@ PRINTFFILE	= libftprintf.a
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -O3
-AR			= ar rcs
+MLXFLAGS	= -lmlx -framework OpenGL -framework AppKit -lz
 RM			= rm -f
 
-SRCS_MANDA = \
+SRCS = \
 	atof.c \
 	color.c \
 	complex.c \
@@ -33,16 +33,16 @@ SRCS_MANDA = \
 	mouse.c \
 	print.c \
 
-OBJS_MANDA = $(SRCS_MANDA:c=o)
+OBJS = $(SRCS:c=o)
 
 all: $(NAME)
 
 bonus: $(NAME)
 
-$(NAME): $(OBJS_MANDA)
+$(NAME): $(OBJS)
 	make -C $(MLXDIR)
 	make -C $(PRINTFDIR)
-	$(CC) $(CFLAGS) -o $@ $^ -lmlx -framework OpenGL -framework AppKit -lz $(MLXDIR)/$(MLXFILE) $(PRINTFDIR)/$(PRINTFFILE)
+	$(CC) $(CFLAGS) -o $@ $^ $(MLXFLAGS) $(MLXDIR)/$(MLXFILE) $(PRINTFDIR)/$(PRINTFFILE)
 
 %o: %c
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -50,7 +50,7 @@ $(NAME): $(OBJS_MANDA)
 clean:
 	make -C $(PRINTFDIR) clean
 	make -C $(MLXDIR) clean
-	$(RM) $(OBJS_MANDA) $(MLXFILE) $(PRINTFFILE)
+	$(RM) $(OBJS) $(MLXFILE) $(PRINTFFILE)
 
 fclean: clean
 	make -C $(PRINTFDIR) fclean
